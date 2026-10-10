@@ -1,0 +1,218 @@
+/* =========================================================================
+   👁️ DRISHTI AI SCREENER WORKSPACE - EXTERNAL MODULE STYLESHEET
+   ========================================================================= */
+
+body {
+    background-color: #111827;
+    color: #f3f4f6;
+    font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+    margin: 0;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+.dashboard-container {
+    max-width: 896px;
+    width: 100%;
+    background-color: #1f2937;
+    border-radius: 12px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    padding: 32px;
+    border: 1px solid #374151;
+    box-sizing: border-box;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.header h1 {
+    color: #2dd4bf;
+    font-size: 30px;
+    font-weight: 800;
+    margin: 0 0 8px 0;
+    letter-spacing: -0.5px;
+}
+
+.header p {
+    color: #9ca3af;
+    font-size: 14px;
+    margin: 0;
+}
+
+.grid-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
+}
+
+@media (min-width: 768px) {
+    .grid-layout { 
+        grid-template-columns: 1fr 1fr; 
+    }
+}
+
+.upload-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed #4b5563;
+    border-radius: 8px;
+    padding: 24px;
+    background-color: #111827;
+    transition: border-color 0.2s;
+}
+
+.upload-panel:hover { 
+    border-color: #2dd4bf; 
+}
+
+.upload-label {
+    cursor: pointer;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.upload-text {
+    color: #2dd4bf;
+    font-weight: 700;
+    margin-top: 12px;
+    font-size: 15px;
+}
+
+.sub-text {
+    color: #6b7280;
+    font-size: 12px;
+    margin-top: 6px;
+}
+
+.action-btn {
+    margin-top: 24px;
+    width: 100%;
+    background-color: #2dd4bf;
+    color: #111827;
+    font-weight: 700;
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: background-color 0.2s;
+}
+
+.action-btn:hover { 
+    background-color: #14b8a6; 
+}
+
+.metrics-panel {
+    background-color: #111827;
+    border: 1px solid #374151;
+    border-radius: 8px;
+    padding: 24px;
+    box-sizing: border-box;
+    min-height: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.placeholder-text {
+    text-align: center;
+    color: #6b7280;
+    font-style: italic;
+    font-size: 14px;
+}
+
+.section-title {
+    text-transform: uppercase;
+    font-size: 11px;
+    font-weight: 700;
+    color: #9ca3af;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+}
+
+.prediction-value {
+    font-size: 22px;
+    font-weight: 900;
+    color: #2dd4bf;
+    margin-bottom: 20px;
+}
+
+.gemma-container {
+    border-top: 1px solid #374151;
+    margin-top: 20px;
+    padding-top: 16px;
+}
+
+.gemma-title {
+    color: #2dd4bf;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+}
+
+.gemma-text {
+    font-size: 13px;
+    color: #e5e7eb;
+    line-height: 1.6;
+    background-color: #1f2937;
+    padding: 14px;
+    border-radius: 6px;
+    border: 1px solid #374151;
+    margin: 0;
+}
+
+.bar-row {
+    margin-bottom: 14px;
+}
+
+.bar-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    margin-bottom: 6px;
+    color: #d1d5db;
+}
+
+.progress-track {
+    width: 100%;
+    background-color: #374151;
+    height: 8px;
+    border-radius: 9999px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    background-color: #2dd4bf;
+    height: 8px;
+    border-radius: 9999px;
+    width: 0%;
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hidden { 
+    display: none !important; 
+}
+
+#preview {
+    max-height: 192px;
+    max-width: 100%;
+    border-radius: 6px;
+    margin-top: 16px;
+    border: 1px solid #374151;
+    object-fit: contain;
+}

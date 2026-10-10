@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drishti AI Ophthalmic Screener Workspace</title>
+    <!-- Binds your modular stylesheet properties cleanly across local loopbacks -->
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+    <div class="dashboard-container">
+        <header class="header">
+            <h1>👁️ Drishti AI Ophthalmic Screener</h1>
+            <p>Upload retinal fundus images for automated MATLAB filtering and fine-tuned Transformer verification.</p>
+        </header>
+
+        <div class="grid-layout">
+            <!-- Left Upload Workspace Panel -->
+            <div class="upload-panel">
+                <input type="file" id="imageInput" accept="image/*" class="hidden" onchange="previewImage(event)">
+                <label for="imageInput" class="upload-label">
+                    <svg style="width: 48px; height: 48px;" fill="none" stroke="#2dd4bf" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                    </svg>
+                    <span class="upload-text">Click to upload fundus image</span>
+                    <span class="sub-text">Accepts standard medical eye scans</span>
+                </label>
+                <img id="preview" class="hidden" alt="Fundus Preview Pipeline">
+                <button onclick="submitDiagnosis()" id="runBtn" class="action-btn hidden">Analyze Scan Matrix</button>
+            </div>
+
+            <!-- Right Diagnostic Metrics Visualization Panel -->
+            <div class="metrics-panel">
+                <div id="placeholderText" class="placeholder-text">
+                    Upload an eye scan and click analyze to view live diagnostic report analytics.
+                </div>
+                
+                <div id="reportContent" class="hidden">
+                    <div>
+                        <div class="section-title">Primary Diagnostic Finding</div>
+                        <div id="mainPrediction" class="prediction-value">---</div>
+                    </div>
+                    
+                    <div>
+                        <div class="section-title">Tuned IDRiD Class Distribution</div>
+                        <div id="barsContainer"></div>
+                    </div>
+
+                    <div class="gemma-container">
+                        <div class="gemma-title">🤖 Google Gemma Clinical Narrative Report</div>
+                        <p id="gemmaReportText" class="gemma-text">Generating report narrative matrix...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Live Execution Data Bridge Script -->
+    <script>
+        function previewImage(event) {
+            const input = event.target;
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.getElementById('preview');
+                    img.src = e.target.result;
+                    img.classList.remove('hidden');
+                    document.getElementById('runBtn').classList.remove('hidden');
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        async function submitDiagnosis() {
+            const fileInput = document.getElementById('imageInput');
+            const runBtn = document.getElementById('runBtn');
+            const placeholder = document.getElementById('placeholderText');
+            const reportContent = document.getElementById('reportContent');
+            const gemmaText = document.getElementById('gemmaReportText');
+            
+            if (!fileInput.files || fileInput.files.length === 0) return;
+            
+            runBtn.innerText = "Processing Pipeline Frameworks...";
+            runBtn.disabled = true;
+            
+          const formData = new FormData();
+// FIXED: Extracts the exact raw image target file picked by the user
+// FIXED: Targets the exact single file object instead of the array wrapper list
+formData.append("file", fileInput.files[0]);
+
+            
+            try {
+             // FIXED: Dynamic relative route prevents loopback connection drops
+const response = await fetch("/api/diagnose", {
+    method: "POST",
+    body: formData
+});
+
+                
+                if (!response.ok) {
+                    throw new Error("Server network pipeline hit a processing error exception.");
+                }
+                
+                const data = await response.json();
+                
+                placeholder.classList.add('hidden');
+                reportContent.classList.remove('hidden');
+                
+                document.getElementById('mainPrediction').innerText = `${data.prediction} (${(data.confidence * 100).toFixed(2)}%)`;
+                gemmaText.innerText = data.gemma_report;
+                
+                const container = document.getElementById('barsContainer');
+                container.innerHTML = "";
+                
+                data.breakdown.forEach(item => {
+                    const pct = (item.confidence * 100).toFixed(1);
+                    container.innerHTML += `
+                        <div class="bar-row">
+                            <div class="bar-labels"><span>${item.condition}</span><span>${pct}%</span></div>
+                            <div class="progress-track"><div class="progress-fill" style="width: ${pct}%"></div></div>
+                        </div>`;
+                });
+            } catch (err) {
+                alert("API Execution Connection Loss: Ensure app.py backend is active on your device.");
+                console.error(err);
+            } finally {
+                runBtn.innerText = "Analyze Scan Matrix";
+                runBtn.disabled = false;
+            }
+        }
+    </script>
+</body>
+</html>
