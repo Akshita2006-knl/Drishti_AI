@@ -1,0 +1,6 @@
+idrid_tuned_model/
+input_images/
+processed_images/
+__pycache__/
+.env
+
